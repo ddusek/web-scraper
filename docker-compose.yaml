@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  scrapy_splash:
+    image: scrapinghub/splash:3.5
+    container_name: scraper-scrapy-splash
+    ports:
+      - 8050:8050
+    networks:
+      - scraper
+
+  postgres:
+    image: postgres:15.1-bullseye
+    container_name: scraper-postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=scraper-dev
+      - POSTGRES_USER=postgres-dev
+      - POSTGRES_PASSWORD=Asdf1234
+    networks:
+      - scraper
+
+  scraper:
+    container_name: scraper-scraper
+    build:
+      context: ./
+      dockerfile: ./Scraper.Dockerfile
+    ports:
+      - 8000:8000
+    networks:
+      - scraper
+    volumes:
+      - ./src/scrapy_scraper:/scrapy_scraper/
+    depends_on:
+      - postgres
+      - scrapy_splash
+
+  frontend:
+    container_name: scraper-frontend
+    build:
+      context: ./
+      dockerfile: ./Frontend.Dockerfile
+    ports: 
+      - 8080:8080
+    networks:
+      - scraper
+    volumes:
+      - ./src/frontend/src:/frontend/src
+    depends_on:
+      - scraper
+
+networks:
+  scraper:
+    driver: bridge
