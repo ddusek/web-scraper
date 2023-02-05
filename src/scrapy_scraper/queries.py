@@ -4,6 +4,8 @@ from scrapy_scraper import Session
 
 
 def retrieve_flats():
+    '''Return first 500 flats.
+    '''
     with Session.begin() as session:
         statement = select(Flat).limit(500)
         flats = session.scalars(statement).all()

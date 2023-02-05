@@ -17,7 +17,6 @@ export const FlatsList = (props) => {
     const fetchData = async () => {
       setLoading(true);
       const response = await fetch("http://localhost:8000/api/flats-to-sell");
-      console.log(response);
       const data = await response.json();
       setData(data);
       setLoading(false);

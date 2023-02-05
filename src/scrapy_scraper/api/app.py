@@ -5,6 +5,7 @@ from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
 from scrapy_scraper.api.endpoints import flats_to_sell
 
+# allow all origins in development.
 middlewares = [
     Middleware(
         CORSMiddleware,

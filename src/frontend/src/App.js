@@ -1,4 +1,3 @@
-import "./App.css";
 import { FlatsList } from "./components/FlatsList";
 
 function App() {

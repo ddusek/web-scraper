@@ -1,4 +1,3 @@
-from typing_extensions import Required
 from sqlalchemy import String
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
@@ -17,4 +16,4 @@ class Flat(Base):
     image: Mapped[str] = mapped_column(String(250), nullable=False)
 
     def as_dict(self):
-       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}

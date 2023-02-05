@@ -1,4 +1,3 @@
-import scrapy
 from scrapy.crawler import CrawlerProcess
 from scrapy_scraper.scraper.spiders.sreality_spider import SRealitySpider
 from scrapy_scraper.models import Base
@@ -13,6 +12,7 @@ if __name__ == '__main__':
         session.query(Flat).delete()
         session.commit()
 
+    # Scrape sreality and save it to db.
     process = CrawlerProcess()
     process.crawl(SRealitySpider)
     process.start()
