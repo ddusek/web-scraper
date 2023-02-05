@@ -2,7 +2,7 @@ import os
 from urllib.parse import urlencode
 import scrapy
 from scrapy_splash import SplashRequest
-from scrapy_scraper.database_connection import create_postgres_engine
+from scrapy_scraper.scraper.items import FlatItem
 
 
 def get_proxy_url(url: str) -> str:
@@ -13,8 +13,11 @@ def get_proxy_url(url: str) -> str:
 
 
 class SRealitySpider(scrapy.Spider):
-    engine = create_postgres_engine()
-
+    custom_settings = {
+            'ITEM_PIPELINES': {
+                'scraper.pipelines.PostgresPipeline': 300
+            }
+        }
     name = 'flats-sell'
     start_urls = ['https://www.sreality.cz/hledani/prodej/byty']
     pagination = '?strana=2'
@@ -31,10 +34,9 @@ class SRealitySpider(scrapy.Spider):
 
     def parse(self, response):
         for flat in response.css('div.property'):
-            yield {
-                'title': flat.xpath('div/div/span/h2/a/span/text()').get(),
-                'image': flat.xpath('preact/div/div/a/img').attrib['src'],
-            }
+            title = flat.xpath('div/div/span/h2/a/span/text()').get()
+            image = flat.xpath('preact/div/div/a/img').attrib['src']
+            yield FlatItem(title, image)
 
         next_page_node = response.css('li.paging-item')
         print(next_page_node)

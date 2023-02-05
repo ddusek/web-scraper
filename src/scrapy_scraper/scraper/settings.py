@@ -1,4 +1,4 @@
-# Scrapy settings for scrapy_scraper project
+# Scrapy settings for scraper project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -7,17 +7,17 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = "scrapy_scraper"
+BOT_NAME = "scraper"
 
-SPIDER_MODULES = ["scrapy_scraper.spiders"]
-NEWSPIDER_MODULE = "scrapy_scraper.spiders"
+SPIDER_MODULES = ["scraper.spiders"]
+NEWSPIDER_MODULE = "scraper.spiders"
 
 # Splash server endpoint
 SPLASH_URL = 'http://localhost:8050'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = "scrapy_scraper (+http://www.yourdomain.com)"
+#USER_AGENT = "scraper (+http://www.yourdomain.com)"
 USER_AGENT_LIST = "./user-agents.txt"
 
 # Obey robots.txt rules
@@ -72,9 +72,9 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    "scrapy_scraper.pipelines.ScrapyScraperPipeline": 300,
-#}
+ITEM_PIPELINES = {
+   "scraper.pipelines.PostgresPipeline": 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
