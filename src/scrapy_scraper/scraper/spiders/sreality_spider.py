@@ -4,6 +4,14 @@ import scrapy
 from scrapy_splash import SplashRequest
 from scrapy_scraper.scraper.items import FlatItem
 
+
+def get_proxy_url(url: str) -> str:
+    api_key = os.getenv('PROXY_API_KEY')
+    payload = {'api_key': api_key, 'url': url, 'render_js': 'true'}
+    proxy_url = 'https://proxy.scrapeops.io/v1/?' + urlencode(payload)
+    return proxy_url
+
+
 class SRealitySpider(scrapy.Spider):
     custom_settings = {'ITEM_PIPELINES': {'scraper.pipelines.PostgresPipeline': 300}}
     name = 'sreality-flats-sell'
@@ -13,7 +21,7 @@ class SRealitySpider(scrapy.Spider):
 
     def start_requests(self):
         for url in self.start_urls:
-            yield SplashRequest(url=url,
+            yield SplashRequest(url=get_proxy_url(url),
                                 callback=self.parse,
                                 endpoint='render.json',
                                 args={
