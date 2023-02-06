@@ -61,7 +61,9 @@ DOWNLOADER_MIDDLEWARES = {
       'scrapy_splash.SplashMiddleware': 725,
       'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
       'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware': None,
-      'random_useragent.RandomUserAgentMiddleware': 400
+      'random_useragent.RandomUserAgentMiddleware': 400,
+      'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
+    'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
 }
 
 # Enable or disable extensions
@@ -103,3 +105,36 @@ TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
 
 DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
+
+ROTATING_PROXY_LIST = [
+    '174.70.1.210:8080'
+    '198.52.117.208:8080'
+    '203.188.251.228:8080'
+    '138.2.55.182:8080'
+    '180.248.188.161:8080'
+    '110.164.15.182:8080'
+    '190.61.88.147:8080'
+    '190.104.245.86:8080'
+    '49.0.252.39:8080'
+    '201.229.250.21:8080'
+    '45.61.163.5:8080'
+    '80.48.119.28:8080'
+    '185.74.6.249:8080'
+    '167.71.61.20:8080'
+    '47.106.188.52:8080'
+    '159.138.252.45:8080'
+    '8.213.129.20:8080'
+    '159.138.155.226:8080'
+    '8.219.74.58:8080'
+    '47.254.47.61:8080'
+    '52.79.107.158:8080'
+    '177.207.208.35:8080'
+    '185.74.6.248:8080'
+    '41.79.230.210:8080'
+    '181.176.211.168:8080'
+    '37.113.130.140:8080'
+    '93.94.178.70:8080'
+    '79.120.177.106:8080'
+    '181.48.157.174:8080'
+    '91.224.168.22:8080'
+]
