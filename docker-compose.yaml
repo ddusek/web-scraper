@@ -20,6 +20,13 @@ services:
       - POSTGRES_PASSWORD=Asdf1234
     networks:
       - scraper
+    volumes:
+      - ./scripts/initdb.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   scraper:
     container_name: scraper-scraper
@@ -33,8 +40,10 @@ services:
     volumes:
       - ./src/scrapy_scraper:/scrapy_scraper/
     depends_on:
-      - postgres
-      - scrapy_splash
+      postgres:
+        condition: service_healthy
+      scrapy_splash:
+        condition: service_started
 
   frontend:
     container_name: scraper-frontend
